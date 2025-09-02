@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\TenantScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 class FacturaVenta extends Model
 {
+    use TenantScope;
     protected $table = 'facturas_ventas';
 
     protected $fillable = [

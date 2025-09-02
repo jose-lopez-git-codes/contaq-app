@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\TenantScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 class Regimen extends Model
 {
+    use TenantScope;
     protected $fillable = ['nombre', 'created_by', 'updated_by'];
 
     protected static function boot()

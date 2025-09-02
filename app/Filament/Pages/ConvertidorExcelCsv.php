@@ -31,6 +31,7 @@ class ConvertidorExcelCsv extends Page implements HasForms
     public ?array $data = [];
     public ?string $archivoConvertido = null;
     public ?string $nombreOriginal = null;
+    public bool $tieneArchivo = false;
 
     public function mount(): void
     {
@@ -56,7 +57,11 @@ class ConvertidorExcelCsv extends Page implements HasForms
                             ->visibility('private')
                             ->required()
                             ->helperText('Formatos soportados: .xls, .xlsx (máximo 10MB)')
-                            ->columnSpanFull(),
+                            ->columnSpanFull()
+                            ->live()
+                            ->afterStateUpdated(function ($state) {
+                                $this->tieneArchivo = !empty($state);
+                            }),
                     ])
                     ->columns(1),
             ])
@@ -70,17 +75,8 @@ class ConvertidorExcelCsv extends Page implements HasForms
                 ->label('Convertir a CSV')
                 ->icon('heroicon-o-arrow-path')
                 ->color('success')
+                ->disabled(fn () => !$this->tieneArchivo)
                 ->action(function () {
-                    // Primero validar que hay un archivo
-                    if (empty($this->data['archivo_excel'])) {
-                        Notification::make()
-                            ->title('Archivo requerido')
-                            ->body('Por favor selecciona un archivo Excel antes de convertir.')
-                            ->warning()
-                            ->send();
-                        return;
-                    }
-
                     $this->convertirArchivo();
                 })
                 ->requiresConfirmation()
@@ -151,6 +147,7 @@ class ConvertidorExcelCsv extends Page implements HasForms
 
             // Limpiar el formulario
             $this->data['archivo_excel'] = null;
+            $this->tieneArchivo = false;
             $this->form->fill();
 
             Notification::make()

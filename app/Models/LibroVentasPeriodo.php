@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\TenantScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 class LibroVentasPeriodo extends Model
 {
+    use TenantScope;
     protected $table = 'libro_ventas_periodos';
 
     protected $fillable = [

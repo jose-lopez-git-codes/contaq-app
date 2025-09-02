@@ -45,4 +45,24 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function contribuyentes()
+    {
+        return $this->hasMany(Contribuyente::class, 'created_by');
+    }
+
+    public function facturasVentas()
+    {
+        return $this->hasMany(FacturaVenta::class, 'created_by');
+    }
+
+    public function libroVentasPeriodos()
+    {
+        return $this->hasMany(LibroVentasPeriodo::class, 'created_by');
+    }
+
+    public function regimens()
+    {
+        return $this->hasMany(Regimen::class, 'created_by');
+    }
 }

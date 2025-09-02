@@ -63,9 +63,9 @@
             <div class="flex items-center">
                 <x-filament::icon
                     icon="heroicon-o-information-circle"
-                    class="h-5 w-5 text-gray-500 mr-2"
+                    style="height: 25px; width:25px; color:#3b82f6; margin-right: 2px;"
                 />
-                <span class="text-gray-700 font-semibold">Información</span>
+                <span class="text-white-700 font-semibold">Información</span>
             </div>
         </x-slot>
 
